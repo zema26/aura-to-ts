@@ -1,0 +1,40 @@
+iTeraTor is universal data language that unifies source code and data in seamless format
+
+{code} Aura
+
+	{module} //name
+
+		// Aura source code
+
+	{/module}
+
+{/code}
+
+
+{data} JSON
+
+	{"a":1, "B":2, "C":[1,2,3]} //and other JSON data
+
+{/data}
+
+{data} XML
+
+	<tag> content </tag> //and other XML data
+
+{/data}
+
+
+data access inside Aura source code:
+
+data.json. ...
+
+data.xml. ...
+
+
+connecting to another files from iTeraTor:
+
+{link} code1.aura {/link}  //for source code
+
+{link} data1.itr {/link}  //for data
+
+{link} code1-data1.itr {/link} //for both

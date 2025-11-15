@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura to TypeScript Translator</title>
+    <style>
+        body {
+            font-family: Verdana, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;  
+            background-color: #f8f9fa;
+            color: #008080; /*#212529;*/
+	        font-size:1.2em;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .hero {
+            width: 100%;
+            height: 50px;  /*250*/
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h1 {
+            color: #008080; /*#004a99;*/
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+            font-family: Calibri;
+        }
+        h2 {
+            color: #008080; /*#0056b3;*/
+            margin-top: 40px;
+            border-bottom: 1px solid #ced4da;
+            padding-bottom: 5px;
+            font-family: Calibri;
+        }
+        h3 {
+            font-weight: 600;
+            color: #008080; /*#343a40;*/
+            font-family: Calibri;
+        }
+        .description {
+            background-color: #f1f5f9; /*#e9ecef;*/
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .description ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+        code {font-family: Calibri;}
+        .code-block {
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: Calibri; 
+            /*SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;*/
+            font-size: 1.0em;  /*0.9*/
+        }
+        /* Simple Syntax Highlighting */
+        .code-block .comment { color: #c0c0c0; font-family: Calibri;} /*88846f*/
+        .code-block .keyword { color: #ffffc8; font-family: Calibri;} /*cc7832*/
+        .code-block .tag { color: #ffd000; font-family: Calibri;}  /*#e8bf6a*/
+        .code-block .function-name { color: #ffd000; font-family: Calibri;}
+        .code-block .type { color: #00ffff; font-family: Calibri;} /*8a653b*/
+        .code-block .op { color: #f8f8f2; font-family: Calibri;} /*cc7832*/
+        .code-block .number { color: #f8f8f2; font-family: Calibri;} /*6897bb*/
+        .code-block .string { color: #a5c261; font-family: Calibri;}
+        .code-block .ts-keyword { color: #c678dd; font-family: Calibri;}
+        .code-block .ts-type { color: #56b6c2; font-family: Calibri;}
+        .code-block .ts-var { color: #f8f8f2; font-family: Calibri;} /*abb2bf*/
+        .code-block .ts-val { color: #f8f8f2; font-family: Calibri;}
+
+        @media (max-width: 900px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero {
+                height: 50px;  //150
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <!-- <img src="https://i.imgur.com/8QpP0Nf.jpeg" alt="Scenic lake with snow and trees"> -->
+    </div>
+
+    <div class="container">
+        <h1>Aura-to-TypeScript Code Translator</h1>
+
+        <div class="description">
+            <p>Aura is a conceptual programming language syntax designed to make code read more naturally, from left to right. It introduces a few key changes to common programming syntax, drawing inspiration from the flexibility of markup languages while maintaining the rigor of a traditional language. This explorer will walk you through its core concepts and visualize how they work in a real algorithm</p>
+            <p>This page demonstrates the translation of the custom <strong>Aura</strong> programming language into <strong>TypeScript</strong>. The Aura language syntax is defined by the provided files and includes several unique features:</p>
+            <ul>
+                [cite_start]<li><strong>Tagged Keywords:</strong> Control flow and definitions are wrapped in tags like <code>{fun} ... {/fun}</code> or <code>{while} ... {/while}</code>. Control flow keywords are enclosed in `{}` tags, similar to HTML or XML. This clearly defines the start and end of a block, making code structure explicit and easy to parse. [cite: 2]</li>
+                [cite_start]<li><strong>Reversed Assignment:</strong> Uses a <code>-&gt;</code> operator, allowing assignments to flow from left to right (e.g., <code>a + b -&gt; a</code>). This mimics how we might describe a calculation naturally: "take 'a minus b' and put it into 'a'". [cite: 2]</li>
+                [cite_start]<li><strong>Reversed Function Declaration:</strong> Syntax is <code>{fun} &lt;params&gt; -&gt; &lt;name&gt; &lt;return_type&gt;</code>. Function declarations also follow the left-to-right pattern: parameters come first, followed by `->`, the function name, and its return type. This creates a consistent flow. [cite: 2]</li>
+            </ul>
+        </div>
+
+        <h2>Example 1: Euclidean Algorithm (from Aura1.txt)</h2>
+        <div class="comparison-grid">
+            <div class="code-container">
+                [cite_start]<h3>Aura Source Code [cite: 1]</h3>
+                <div class="code-block">
+<pre><span class="keyword">{module}</span> Euclidean 		<span class="comment">// module itself</span>
+
+     <span class="keyword">{fun}</span> <span class="type">int</span> a, <span class="type">int</span> b <span class="op">-&gt;</span> <span class="function-name">Euclid</span> <span class="type">int</span>  <span class="comment">// function with type int</span>
+							
+	<span class="keyword">{while}</span> b<span class="op">!=</span> <span class="number">0</span>
+		<span class="keyword">{if}</span> a <span class="op">&gt;</span> b
+			a <span class="op">-</span> b <span class="op">-&gt;</span> a
+		<span class="keyword">{else}</span>
+			b <span class="op">-</span> a <span class="op">-&gt;</span> b
+		<span class="keyword">{/else}</span>
+		<span class="keyword">{/if}</span>
+	<span class="keyword">{/while}</span>
+
+	<span class="keyword">{return}</span> a <span class="keyword">{/return}</span>
+
+    <span class="keyword">{/fun}</span>
+
+  
+  <span class="keyword">{fun}</span>	<span class="type">string</span> args[] <span class="op">-&gt;</span> <span class="function-name">main</span> <span class="type">int</span>	<span class="comment">// main function</span>
+
+	<span class="type">int</span> a, b
+
+        <span class="tag">in</span> <span class="op">-&gt;</span> a, b <span class="op">-&gt;</span> <span class="function-name">Euclid</span> <span class="op">-&gt;</span> <span class="tag">out</span>
+
+        <span class="comment">// combined input and output and function call</span>
+
+	<span class="comment">// here is introduced streamlined logic and</span>
+	
+	<span class="comment">// seamless input to output syntax</span>
+
+  <span class="keyword">{/fun}</span>
+
+<span class="keyword">{/module}</span></pre>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <h3>Translated TypeScript Code</h3>
+                <div class="code-block">
+<pre><span class="comment">// module Euclidean</span>
+<span class="ts-keyword">export</span> <span class="ts-keyword">class</span> <span class="ts-type">Euclidean</span> {
+
+    <span class="comment">// {fun} int a, int b -> Euclid int</span>
+    <span class="ts-keyword">public</span> <span class="function-name">Euclid</span>(<span class="ts-var">a</span>: <span class="ts-type">number</span>, <span class="ts-var">b</span>: <span class="ts-type">number</span>): <span class="ts-type">number</span> {
+        
+        <span class="comment">// {while} b!= 0</span>
+        <span class="ts-keyword">while</span> (<span class="ts-var">b</span> !== <span class="ts-val">0</span>) {
+            <span class="comment">// {if} a > b</span>
+            <span class="ts-keyword">if</span> (<span class="ts-var">a</span> > <span class="ts-var">b</span>) {
+                <span class="comment">// a - b -> a</span>
+                <span class="ts-var">a</span> = <span class="ts-var">a</span> - <span class="ts-var">b</span>;
+            } <span class="ts-keyword">else</span> {
+                <span class="comment">// b - a -> b</span>
+                <span class="ts-var">b</span> = <span class="ts-var">b</span> - <span class="ts-var">a</span>;
+            }
+        }
+        <span class="comment">// {/while}</span>
+
+        <span class="comment">// {return} a {/return}</span>
+        <span class="ts-keyword">return</span> <span class="ts-var">a</span>;
+    }
+
+    <span class="comment">// {fun} string args[] -> main int</span>
+    <span class="comment">// Simulating the "in -> a, b -> Euclid -> out" pipeline</span>
+    <span class="ts-keyword">public</span> <span class="function-name">main</span>(): <span class="ts-type">number</span> {
+        <span class="comment">// 'in' is simulated using prompts</span>
+        <span class="ts-keyword">const</span> <span class="ts-var">a</span> = <span class="ts-type">parseInt</span>(<span class="ts-keyword">prompt</span>(<span class="string">"Enter value for a:"</span>) || <span class="string">"0"</span>);
+        <span class="ts-keyword">const</span> <span class="ts-var">b</span> = <span class="ts-type">parseInt</span>(<span class="ts-keyword">prompt</span>(<span class="string">"Enter value for b:"</span>) || <span class="string">"0"</span>);
+
+        <span class="ts-keyword">const</span> <span class="ts-var">result</span> = <span class="ts-keyword">this</span>.<span class="function-name">Euclid</span>(<span class="ts-var">a</span>, <span class="ts-var">b</span>);
+
+        <span class="comment">// 'out' is simulated using console.log</span>
+        <span class="ts-var">console</span>.<span class="function-name">log</span>(<span class="ts-var">result</span>);
+        <span class="ts-keyword">return</span> <span class="ts-val">0</span>;
+    }
+}
+
+<span class="comment">// Simulation of running the main function</span>
+<span class="ts-keyword">const</span> <span class="ts-var">euclidApp</span> = <span class="ts-keyword">new</span> <span class="ts-type">Euclidean</span>();
+<span class="ts-var">euclidApp</span>.<span class="function-name">main</span>();
+</pre>
+                </div>
+            </div>
+        </div>
+
+        <h2>Example 2: Sieve of Eratosthenes (from Aura2.txt)</h2>
+        <div class="comparison-grid">
+            <div class="code-container">
+                [cite_start]<h3>Aura Source Code [cite: 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]</h3>
+                <div class="code-block">
+<pre><span class="keyword">{module}</span> primes 
+
+        <span class="keyword">{fun}</span> <span class="type">int</span> n <span class="op">-&gt;</span> <span class="function-name">Eratosthenes</span>       <span class="comment">// subroutine declaration with no type</span>
+             
+            <span class="type">bool</span> primes [ n ]        <span class="comment">// variable declaration</span>
+
+            <span class="type">int</span> l(<span class="number">0</span>), i(<span class="number">0</span>), index_square(<span class="number">3</span>)         <span class="comment">// proc sift</span>
+
+         
+            <span class="type">int</span> first, last, factor <span class="comment">// proc mark sieve</span>
+
+            <span class="keyword">{for}</span> k(<span class="number">0</span>)<span class="op">++</span> <span class="op">&lt;</span> n       <span class="comment">// fill with true, new loop syntax</span>
+
+                <span class="tag">true</span> <span class="op">-&gt;</span> primes[k] 
+
+            <span class="keyword">{/for}</span>   
+                
+         
+   
+          <span class="keyword">{while}</span> index_square <span class="op">&lt;</span> n         <span class="comment">//proc sift</span>
+
+                <span class="keyword">{if}</span> primes[i]             <span class="comment">//proc mark sieve</span>
+
+                    <span class="number">0</span> <span class="op">+</span> index_square <span class="op">-&gt;</span> first
+                    <span class="number">0</span> <span class="op">+</span> n  <span class="op">-&gt;</span>  last 
+                    i <span class="op">+</span> i <span class="op">+</span> <span class="number">3</span>  <span class="op">-&gt;</span>  factor
+                    <span class="tag">false</span>  <span class="op">-&gt;</span>  primes[first] 
+
+                    <span class="keyword">{while}</span> last <span class="op">-</span> first <span class="op">&gt;</span> factor 
+
+                
+         		first <span class="op">+</span> factor  <span class="op">-&gt;</span>  first
+                        <span class="tag">false</span>  <span class="op">-&gt;</span>  primes[first]
+
+                    <span class="keyword">{/while}</span>
+                    
+                <span class="keyword">{/if}</span>  
+                <span class="comment">// proc mark sieve</span>
+
+                i <span class="op">+</span> <span class="number">1</span>  <span class="op">-&gt;</span>  i
+                <span class="number">2</span> <span class="op">*</span> i <span class="op">*</span> (i <span class="op">+</span> <span class="number">3</span>) <span class="op">+</span> <span class="number">3</span>  <span class="op">-&gt;</span>  index_square
+
+            <span class="keyword">{/while}</span>          <span class="comment">// proc sift</span>
+
+           
+            <span class="string">' 2'</span>  <span class="op">-&gt;</span>  <span class="tag">out</span>  <span class="comment">// print out</span>
+
+            <span class="keyword">{for}</span> i(<span class="number">0</span>)<span class="op">++</span> <span class="op">&lt;</span> n         <span class="comment">// print out, new loop syntax</span>
+
+                <span class="keyword">{if}</span> primes[i] 
+
+                    <span class="keyword">{if}</span> <span class="number">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="number">3</span> <span class="op">&gt;</span> n 
+               
+         		 <span class="keyword">break</span>
+                    <span class="keyword">{/if}</span>
+
+                    <span class="string">' '</span> <span class="number">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="number">3</span>  <span class="op">-&gt;</span>  <span class="tag">out</span>
+                    l <span class="op">+</span> <span class="number">1</span>  <span class="op">-&gt;</span>  l
+
+               
+         	    <span class="keyword">{if}</span> l <span class="op">%</span> <span class="number">10</span> <span class="op">==</span> <span class="number">0</span> 
+                        <span class="string">'\n'</span>  <span class="op">-&gt;</span>  <span class="tag">out</span>
+                    <span class="keyword">{/if}</span>   
+          
+                <span class="keyword">{/if}</span>        <span class="comment">// if</span>
+
+   
+            <span class="keyword">{/for}</span>         <span class="comment">// print out</span>
+
+            <span class="string">'\n number : '</span>  l  <span class="op">-&gt;</span>  <span class="tag">out</span>
+
+        <span class="keyword">{/fun}</span>            <span class="comment">// erato fun</span>
+
+     
+        <span class="keyword">{fun}</span>  <span class="function-name">main</span>  <span class="type">int</span>		<span class="comment">// main function</span>
+ 
+        <span class="number">1000</span> <span class="op">-&gt;</span> <span class="function-name">Eratosthenes</span>       
+        <span class="comment">// subroutine call</span>
+
+        <span class="keyword">{/fun}</span>
+
+<span class="keyword">{/module}</span></pre>
+                </div>
+            </div>
+
+            <div class="code-container">
+                <h3>Translated TypeScript Code</h3>
+                <div class="code-block">
+<pre><span class="comment">// module primes</span>
+<span class="comment">// Assuming a Node.js environment for 'process.stdout.write' 
+// to match Aura's 'out' stream behavior (no auto-newline)</span>
+<span class="ts-keyword">export</span> <span class="ts-keyword">class</span> <span class="ts-type">Primes</span> {
+
+    <span class="comment">// {fun} int n -> Eratosthenes</span>
+    <span class="ts-keyword">public</span> <span class="function-name">Eratosthenes</span>(<span class="ts-var">n</span>: <span class="ts-type">number</span>): <span class="ts-type">void</span> {
+        
+        <span class="comment">// bool primes [ n ]</span>
+        <span class="ts-keyword">let</span> <span class="ts-var">primes</span>: <span class="ts-type">boolean</span>[] = <span class="ts-keyword">new</span> <span class="ts-type">Array</span>(<span class="ts-var">n</span>);
+        
+        <span class="comment">// int l(0), i(0), index_square(3)</span>
+        <span class="ts-keyword">let</span> <span class="ts-var">l</span>: <span class="ts-type">number</span> = <span class="ts-val">0</span>;
+        <span class="ts-keyword">let</span> <span class="ts-var">i</span>: <span class="ts-type">number</span> = <span class="ts-val">0</span>;
+        <span class="ts-keyword">let</span> <span class="ts-var">index_square</span>: <span class="ts-type">number</span> = <span class="ts-val">3</span>;
+
+        <span class="comment">// int first, last, factor</span>
+        <span class="ts-keyword">let</span> <span class="ts-var">first</span>: <span class="ts-type">number</span>;
+        <span class="ts-keyword">let</span> <span class="ts-var">last</span>: <span class="ts-type">number</span>;
+        <span class="ts-keyword">let</span> <span class="ts-var">factor</span>: <span class="ts-type">number</span>;
+
+        <span class="comment">// {for} k(0)++ < n</span>
+        <span class="ts-keyword">for</span> (<span class="ts-keyword">let</span> <span class="ts-var">k</span> = <span class="ts-val">0</span>; <span class="ts-var">k</span> < <span class="ts-var">n</span>; <span class="ts-var">k</span>++) {
+            <span class="comment">// true -> primes[k]</span>
+            <span class="ts-var">primes</span>[<span class="ts-var">k</span>] = <span class="ts-val">true</span>;
+        }
+        <span class="comment">// {/for}</span>
+
+        <span class="comment">// {while} index_square < n</span>
+        <span class="ts-keyword">while</span> (<span class="ts-var">index_square</span> < <span class="ts-var">n</span>) {
+            
+            <span class="comment">// {if} primes[i]</span>
+            <span class="ts-keyword">if</span> (<span class="ts-var">primes</span>[<span class="ts-var">i</span>]) {
+                <span class="comment">// 0 + index_square -> first</span>
+                <span class="ts-var">first</span> = <span class="ts-val">0</span> + <span class="ts-var">index_square</span>;
+                <span class="comment">// 0 + n -> last</span>
+                <span class="ts-var">last</span> = <span class="ts-val">0</span> + <span class="ts-var">n</span>;
+                <span class="comment">// i + i + 3 -> factor</span>
+                <span class="ts-var">factor</span> = <span class="ts-var">i</span> + <span class="ts-var">i</span> + <span class="ts-val">3</span>;
+                <span class="comment">// false -> primes[first]</span>
+                <span class="ts-var">primes</span>[<span class="ts-var">first</span>] = <span class="ts-val">false</span>;
+
+                <span class="comment">// {while} last - first > factor</span>
+                <span class="ts-keyword">while</span> (<span class="ts-var">last</span> - <span class="ts-var">first</span> > <span class="ts-var">factor</span>) {
+                    <span class="comment">// first + factor -> first</span>
+                    <span class="ts-var">first</span> = <span class="ts-var">first</span> + <span class="ts-var">factor</span>;
+                    <span class="comment">// false -> primes[first]</span>
+                    <span class="ts-var">primes</span>[<span class="ts-var">first</span>] = <span class="ts-val">false</span>;
+                }
+            }
+
+            <span class="comment">// i + 1 -> i</span>
+            <span class="ts-var">i</span> = <span class="ts-var">i</span> + <span class="ts-val">1</span>;
+            <span class="comment">// 2 * i * (i + 3) + 3 -> index_square</span>
+            <span class="ts-var">index_square</span> = <span class="ts-val">2</span> * <span class="ts-var">i</span> * (<span class="ts-var">i</span> + <span class="ts-val">3</span>) + <span class="ts-val">3</span>;
+        } <span class="comment">// {/while}</span>
+        
+        <span class="comment">// ' 2' -> out</span>
+        <span class="ts-var">process</span>.<span class="ts-var">stdout</span>.<span class="function-name">write</span>(<span class="string">" 2"</span>);
+
+        <span class="comment">// {for} i(0)++ < n</span>
+        <span class="ts-keyword">for</span> (<span class="ts-keyword">let</span> <span class="ts-var">i</span> = <span class="ts-val">0</span>; <span class="ts-var">i</span> < <span class="ts-var">n</span>; <span class="ts-var">i</span>++) {
+            <span class="comment">// {if} primes[i]</span>
+            <span class="ts-keyword">if</span> (<span class="ts-var">primes</span>[<span class="ts-var">i</span>]) {
+                
+                <span class="comment">// {if} 2 * i + 3 > n</span>
+                <span class="ts-keyword">if</span> (<span class="ts-val">2</span> * <span class="ts-var">i</span> + <span class="ts-val">3</span> > <span class="ts-var">n</span>) {
+                    <span class="comment">// break</span>
+                    <span class="ts-keyword">break</span>;
+                }
+
+                <span class="comment">// ' ' 2 * i + 3 -> out</span>
+                <span class="ts-var">process</span>.<span class="ts-var">stdout</span>.<span class="function-name">write</span>(<span class="string">" "</span> + (<span class="ts-val">2</span> * <span class="ts-var">i</span> + <span class="ts-val">3</span>));
+                <span class="comment">// l + 1 -> l</span>
+                <span class="ts-var">l</span> = <span class="ts-var">l</span> + <span class="ts-val">1</span>;
+
+                <span class="comment">// {if} l % 10 == 0</span>
+                <span class="ts-keyword">if</span> (<span class="ts-var">l</span> % <span class="ts-val">10</span> === <span class="ts-val">0</span>) {
+                    <span class="comment">// '\n' -> out</span>
+                    <span class="ts-var">process</span>.<span class="ts-var">stdout</span>.<span class="function-name">write</span>(<span class="string">"\n"</span>);
+                }
+            }
+        } <span class="comment">// {/for}</span>
+
+        <span class="comment">// '\n number : ' l -> out</span>
+        <span class="ts-var">process</span>.<span class="ts-var">stdout</span>.<span class="function-name">write</span>(<span class="string">"\n number : "</span> + <span class="ts-var">l</span>);
+    }
+
+    <span class="comment">// {fun} main int</span>
+    <span class="ts-keyword">public</span> <span class="function-name">main</span>(): <span class="ts-type">number</span> {
+        <span class="comment">// 1000 -> Eratosthenes</span>
+        <span class="ts-keyword">this</span>.<span class="function-name">Eratosthenes</span>(<span class="ts-val">1000</span>);
+        <span class="ts-keyword">return</span> <span class="ts-val">0</span>;
+    }
+}
+
+<span class="comment">// Simulation of running the main function</span>
+<span class="ts-keyword">const</span> <span class="ts-var">primesApp</span> = <span class="ts-keyword">new</span> <span class="ts-type">Primes</span>();
+<span class="ts-var">primesApp</span>.<span class="function-name">main</span>();
+</pre>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura to TypeScript Translation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .code-column {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            flex: 1 1 45%;
+            min-width: 300px;
+            max-width: 600px;
+            overflow: hidden;
+        }
+        .code-column h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            padding: 15px 20px;
+            margin: 0;
+            background-color: #f1f3f5;
+            border-bottom: 1px solid #ced4da;
+        }
+        pre {
+            padding: 20px;
+            margin: 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+        /* Syntax Highlighting */
+        .ts-keyword { color: #d73a49; font-weight: bold; }
+        .ts-class { color: #6f42c1; }
+        .ts-function { color: #005cc5; }
+        .ts-variable { color: #e36209; }
+        .ts-number { color: #005cc5; }
+        .ts-comment { color: #6a737d; }
+        
+        .aura-keyword { color: #007bff; font-weight: bold; }
+        .aura-type { color: #28a745; }
+        .aura-comment { color: #6c757d; }
+        .aura-operator { color: #fd7e14; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Aura ➔ TypeScript Translation</h1>
+    <div class="container">
+        
+        <div class="code-column">
+            <h2>Aura Language (Source)</h2>
+            <pre><code class="language-aura">{module} Euclidean
+
+    <span class="aura-keyword">{class}</span> GCD    <span class="aura-comment">//class declaration</span>
+
+        <span class="aura-type">int</span> a, <span class="aura-type">int</span> b    <span class="aura-comment">//data members</span>
+
+        <span class="aura-keyword">{fun}</span> <span class="aura-type">int</span> a, <span class="aura-type">int</span> b <span class="aura-operator">-></span> Euclid <span class="aura-type">int</span>    <span class="aura-comment">//member function</span>
+
+            <span class="aura-keyword">{while}</span> b!=0
+               <span class="aura-keyword">{if}</span> a > b
+                   a - b <span class="aura-operator">-></span> a
+                <span class="aura-keyword">{else}</span>
+                   b - a <span class="aura-operator">-></span> b
+                <span class="aura-keyword">{/else}</span>
+                <span class="aura-keyword">{/if}</span>
+            <span class="aura-keyword">{/while}</span>
+
+            <span class="aura-keyword">{return}</span> a <span class="aura-keyword">{/return}</span>
+
+ 
+        <span class="aura-keyword">{/fun}</span>
+    <span class="aura-keyword">{/class}</span>
+
+
+    <span class="aura-keyword">{fun}</span> <span class="aura-type">string</span> args[] <span class="aura-operator">-></span> main <span class="aura-type">int</span>    <span class="aura-comment">//main function</span>
+
+        GCD N    <span class="aura-comment">//object N of class GCD</span>
+
+        in <span class="aura-operator">-></span> N.a, N.b <span class="aura-operator">-></span> N.Euclid <span class="aura-operator">-></span> out    <span class="aura-comment">//input, output in one line</span>
+
+    <span class="aura-keyword">{/fun}</span>
+
+<span class="aura-keyword">{/module}</span>
+</code></pre>
+        </div>
+        
+        <div class="code-column">
+            <h2>TypeScript Translation</h2>
+            <pre><code class="language-typescript"><span class="ts-comment">// Module 'Euclidean' is implied by the file context in TypeScript</span>
+
+<span class="ts-keyword">class</span> <span class="ts-class">GCD</span> {
+    <span class="ts-comment">// data members</span>
+    <span class="ts-variable">a</span>: <span class="ts-class">number</span> = <span class="ts-number">0</span>;
+    <span class="ts-variable">b</span>: <span class="ts-class">number</span> = <span class="ts-number">0</span>;
+
+    <span class="ts-comment">// member function</span>
+    <span class="ts-comment">// Implements the Euclidean algorithm using subtraction</span>
+    <span class="ts-function">euclid</span>(<span class="ts-variable">a</span>: <span class="ts-class">number</span>, <span class="ts-variable">b</span>: <span class="ts-class">number</span>): <span class="ts-class">number</span> {
+        
+        <span class="ts-keyword">while</span> (<span class="ts-variable">b</span> !== <span class="ts-number">0</span>) {
+            <span class="ts-keyword">if</span> (<span class="ts-variable">a</span> > <span class="ts-variable">b</span>) {
+                <span class="ts-variable">a</span> = <span class="ts-variable">a</span> - <span class="ts-variable">b</span>; <span class="ts-comment">// a - b -> a</span>
+            } <span class="ts-keyword">else</span> {
+                <span class="ts-variable">b</span> = <span class="ts-variable">b</span> - <span class="ts-variable">a</span>; <span class="ts-comment">// b - a -> b</span>
+            }
+        }
+        
+        <span class="ts-keyword">return</span> <span class="ts-variable">a</span>;
+    }
+}
+
+
+<span class="ts-comment">// --- Simulation of main function ---</span>
+
+<span class="ts-comment">// GCD N    //object N of class GCD</span>
+<span class="ts-keyword">const</span> <span class="ts-variable">N</span> = <span class="ts-keyword">new</span> <span class="ts-class">GCD</span>();
+
+<span class="ts-comment">// in -> N.a, N.b ... (Simulating input)</span>
+<span class="ts-variable">N</span>.<span class="ts-variable">a</span> = <span class="ts-number">1071</span>;
+<span class="ts-variable">N</span>.<span class="ts-variable">b</span> = <span class="ts-number">462</span>;
+
+<span class="ts-comment">// ... -> N.Euclid -> out (Simulating call and output)</span>
+<span class="ts-keyword">const</span> <span class="ts-variable">result</span> = <span class="ts-variable">N</span>.<span class="ts-function">euclid</span>(<span class="ts-variable">N</span>.<span class="ts-variable">a</span>, <span class="ts-variable">N</span>.<span class="ts-variable">b</span>);
+
+<span class="ts-comment">// Simulating 'out'</span>
+console.<span class="ts-function">log</span>(<span class="ts-variable">result</span>); <span class="ts-comment">// Output: 21</span>
+</code></pre>
+        </div>
+
+    </div>
+
+</body>
+</html>
