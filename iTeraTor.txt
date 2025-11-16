@@ -1,6 +1,8 @@
-iTeraTor is universal data language that unifies source code and data in seamless format
+iTeraTor is universal language that unifies source code and data in one seamless format
 
-{code} Aura
+-------------------------------------------------------------------------------------
+
+{code} Aura  //new programming language
 
 	{module} //name
 
@@ -23,6 +25,7 @@ iTeraTor is universal data language that unifies source code and data in seamles
 
 {/data}
 
+------------------------------------------------------------------------------------
 
 data access inside Aura source code:
 
@@ -38,3 +41,16 @@ connecting to another files from iTeraTor:
 {link} data1.itr {/link}  //for data
 
 {link} code1-data1.itr {/link} //for both
+
+
+in oop class' objects data (data members)  
+
+are combined with code (member functions)
+
+in iTeraTor there is the same thing
+
+only on more general level:
+
+entire source code and all data for processing 
+
+by that code are contained in one file
